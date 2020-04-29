@@ -104,7 +104,8 @@ var UIController = (function () {
         budgetLabel: '.budget__value',
         incomeLabel: '.budget__income--value',
         expensesLabel: '.budget__expenses--value',
-        percentageLabel: '.budget__expenses--percentage'
+        percentageLabel: '.budget__expenses--percentage',
+        container: '.container'
 
     }
 
@@ -123,12 +124,12 @@ var UIController = (function () {
             var html;
 
             type==='inc'
-            ?(html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div>\
+            ?(html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div>\
             <div class="right clearfix"><div class="item__value">%value%</div>\
             <div class="item__delete"><button class="item__delete--btn">\
             <i class="ion-ios-close-outline"></i</button></div></div></div>',
             element = DOMstrings.incomeContainer)
-            :(html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div>\
+            :(html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div>\
             <div class="right clearfix"><div class="item__value">%value%</div>\
             <div class="item__delete"><button class="item__delete--btn">\
             <i class="ion-ios-close-outline"></i></button></div></div></div>',
@@ -188,7 +189,9 @@ var controller = (function(budgetCtrl, UICtrl) {
         document.addEventListener('keypress', function(event) {
     
             event.keyCode===13 || event.which === 13?ctrlAddItem():null;
-        })
+        });
+
+        document.querySelector(DOM.container).addEventListener('click', ctrDeleteItem)
     }
 
     var updateBudget = function() {
@@ -224,10 +227,28 @@ var controller = (function(budgetCtrl, UICtrl) {
             // 5. Calculate and Update Budget
             updateBudget();
 
-
         } else {null}   
-
     }
+
+    var ctrDeleteItem = function(event) {
+        var itemId, splitId, type, ID;
+        itemId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+        if (itemId) {
+            //inc-1
+            splitId = itemId.split('-')
+            type = splitId[0];
+            ID =splitId[1];
+
+            // 1. Delete item from the data srructure
+
+            //2. Delete item from UI
+
+            // 3. Update and show th enew budget
+
+        }
+
+    };
 
     return {
         init: function() {
